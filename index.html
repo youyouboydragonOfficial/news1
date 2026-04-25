@@ -1,0 +1,150 @@
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>youyouboy_dragon_Official Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .header-glass {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .news-tag {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .news-item {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .news-item:hover {
+            background-color: #f1f5f9;
+            transform: translateX(5px);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: zoomIn 0.2s ease-out;
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="header-glass sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="text-xl font-bold text-slate-800">youyouboy_dragon_Official</div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <header class="text-center mb-16">
+            <h1 class="text-3xl font-bold text-slate-900 mb-2">Official News</h1>
+            <p class="text-slate-500">クリックすると詳細を表示します。</p>
+        </header>
+
+        <!-- 【1. リスト部分】ここには「タイトル」だけが並びます -->
+        <div class="space-y-4 mb-20">
+            
+            <!-- 1番目 -->
+            <div class="news-item bg-white p-5 rounded-xl border border-slate-200 flex items-center gap-4 shadow-sm" onclick="openMsg('n1')">
+                <span class="text-slate-400 text-sm font-mono">2025.04.25</span>
+                <span class="news-tag bg-blue-100 text-blue-700">INFO</span>
+                <div class="font-medium text-slate-800">サイト公開のお知らせ</div>
+            </div>
+
+            <!-- 2番目（追加例） -->
+            <div class="news-item bg-white p-5 rounded-xl border border-slate-200 flex items-center gap-4 shadow-sm" onclick="openMsg('n2')">
+                <span class="text-slate-400 text-sm font-mono">2025.04.26</span>
+                <span class="news-tag bg-green-100 text-green-700">UPDATE</span>
+                <div class="font-medium text-slate-800">新しい機能の使い方</div>
+            </div>
+
+        </div>
+
+        <section class="bg-white p-8 rounded-2xl border border-slate-200">
+            <h2 class="text-xl font-bold text-slate-800 mb-4">公式ステートメント</h2>
+            <p class="text-slate-600 text-sm leading-relaxed">
+                当サイトは情報の正確性を重視しています。
+            </p>
+        </section>
+    </main>
+
+    <!-- 【2. 中央に出る中身】ここが、クリックした後に表示される「中身」です -->
+    <!-- 普段は見えません。クリックされた時だけ真ん中に出てきます -->
+    
+    <!-- 1番目の中身 -->
+    <div id="n1" class="modal" onclick="closeMsg('n1')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 class="text-xl font-bold mb-4 text-slate-900">サイト公開のお知らせ</h3>
+            <p class="text-slate-600 mb-6">
+                ここに詳しい説明を書きます。サイトをオープンしました！
+            </p>
+            <button onclick="closeMsg('n1')" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold">閉じる</button>
+        </div>
+    </div>
+
+    <!-- 2番目の中身 -->
+    <div id="n2" class="modal" onclick="closeMsg('n2')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 class="text-xl font-bold mb-4 text-slate-900">新しい機能の使い方</h3>
+            <p class="text-slate-600 mb-6">
+                お知らせをクリックすると、このように詳細が中央に大きく表示されます。<br>
+                閉じるボタンを押すと戻ります。
+            </p>
+            <button onclick="closeMsg('n2')" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold">閉じる</button>
+        </div>
+    </div>
+
+    <script>
+        function openMsg(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMsg(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+
+</body>
+</html>
+
+```
